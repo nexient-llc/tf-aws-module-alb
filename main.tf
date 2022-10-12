@@ -132,36 +132,13 @@ resource "aws_lb_target_group" "application" {
   }
 }
 
-# To Re-enable HTTPS/443
-# 1. Remove 80/HTTP and uncomment the options in aws_lb_listener.application
-# 2. Uncomment aws_lb_listener.load_balancer_redirect
-
 resource "aws_lb_listener" "application" {
   load_balancer_arn = aws_lb.application.arn
   port              = "80"
   protocol          = "HTTP"
-  # port              = "443"
-  # protocol          = "HTTPS"
-  # certificate_arn   = var.certificate_arn
 
   default_action {
     target_group_arn = aws_lb_target_group.application.id
     type             = "forward"
   }
 }
-
-# resource "aws_lb_listener" "load_balancer_redirect" {
-#   load_balancer_arn = aws_lb.application.arn
-#   port              = "80"
-#   protocol          = "HTTP"
-
-#   default_action {
-#     type = "redirect"
-
-#     redirect {
-#       port        = "443"
-#       protocol    = "HTTPS"
-#       status_code = "HTTP_301"
-#     }
-#   }
-# }
