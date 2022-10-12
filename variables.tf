@@ -13,21 +13,21 @@
 // limitations under the License.
 
 variable "name" {
-  description = "Name of the application"
+  description = "Name of the application."
   type        = string
 }
 
 variable "naming_prefix" {
-  description = "Prefix to other resources"
+  description = "Prefix to other resources."
 }
 
 variable "vpc_id" {
-  description = "Application Name running in ECS Task"
+  description = "Application Name running in ECS Task."
   type        = string
 }
 
 variable "subnets" {
-  description = "Subnets for the Load Balancer to use"
+  description = "Subnetnet ID's for the Load Balancer to use."
   type        = list(string)
 }
 
