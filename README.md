@@ -7,7 +7,6 @@
 
 The module creates an Application Load Balancer.
 
-##
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
