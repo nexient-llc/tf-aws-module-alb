@@ -5,7 +5,11 @@
 
 ## Overview
 
-The module creates an Application Load Balancer.
+The module creates Application Load Balancer, Listeners, Listeners Rules, and Targets Groups with TF.
+
+## Tests
+
+In order to pass tests, a developer needs to replace variables in `tests/test.tfvars` with the appropriate values. Filler sample variables have been provided, but may need to be created in AWS before running tests.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
