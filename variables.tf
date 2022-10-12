@@ -27,8 +27,19 @@ variable "vpc_id" {
 }
 
 variable "subnets" {
-  description = "Subnetnet ID's for the Load Balancer to use."
+  description = "Subnet ID's for the Load Balancer to use."
   type        = list(string)
+}
+
+variable "health_check_interval" {
+  description = "The approximate amount of time, in seconds, during which no response from a target means a failed health check."
+  type        = number
+  default     = 30
+
+  validation {
+    condition     = var.health_check_interval >= 2 && var.health_check_interval <= 120
+    error_message = "The value must be between 2 and 120 seconds."
+  }
 }
 
 variable "health_check_path" {

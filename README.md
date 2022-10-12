@@ -47,7 +47,8 @@ No modules.
 | <a name="input_name"></a> [name](#input\_name) | Name of the application. | `string` | n/a | yes |
 | <a name="input_naming_prefix"></a> [naming\_prefix](#input\_naming\_prefix) | Prefix to other resources. | `any` | n/a | yes |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | Application Name running in ECS Task. | `string` | n/a | yes |
-| <a name="input_subnets"></a> [subnets](#input\_subnets) | Subnetnet ID's for the Load Balancer to use. | `list(string)` | n/a | yes |
+| <a name="input_subnets"></a> [subnets](#input\_subnets) | Subnet ID's for the Load Balancer to use. | `list(string)` | n/a | yes |
+| <a name="input_health_check_interval"></a> [health\_check\_interval](#input\_health\_check\_interval) | The approximate amount of time, in seconds, during which no response from a target means a failed health check. | `number` | `30` | no |
 | <a name="input_health_check_path"></a> [health\_check\_path](#input\_health\_check\_path) | Path to check App Health (e.g.; /, /health) | `string` | `"/"` | no |
 | <a name="input_application_port"></a> [application\_port](#input\_application\_port) | Port of Application | `string` | `80` | no |
 | <a name="input_certificate_arn"></a> [certificate\_arn](#input\_certificate\_arn) | ARN of the ACM cert | `string` | `""` | no |

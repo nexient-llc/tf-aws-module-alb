@@ -121,7 +121,7 @@ resource "aws_lb_target_group" "application" {
   )
 
   health_check {
-    interval            = 30
+    interval            = var.health_check_interval
     path                = var.health_check_path
     port                = var.application_port
     healthy_threshold   = 3
