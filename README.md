@@ -1,105 +1,64 @@
-# Your Module Name
+# tf-aws-module-alb
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC_BY--NC--ND_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 
 ## Overview
 
-What does this module do?
+The module creates an Application Load Balancer.
 
-## Pre-Commit hooks
+##
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
 
-[.pre-commit-config.yaml](.pre-commit-config.yaml) file defines certain `pre-commit` hooks that are relevant to terraform, golang and common linting tasks. There are no custom hooks added.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.1.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.57.0 |
 
-`commitlint` hook enforces commit message in certain format. The commit contains the following structural elements, to communicate intent to the consumers of your commit messages:
+## Providers
 
-- **fix**: a commit of the type `fix` patches a bug in your codebase (this correlates with PATCH in Semantic Versioning).
-- **feat**: a commit of the type `feat` introduces a new feature to the codebase (this correlates with MINOR in Semantic Versioning).
-- **BREAKING CHANGE**: a commit that has a footer `BREAKING CHANGE:`, or appends a `!` after the type/scope, introduces a breaking API change (correlating with MAJOR in Semantic Versioning). A BREAKING CHANGE can be part of commits of any type.
-footers other than BREAKING CHANGE: <description> may be provided and follow a convention similar to git trailer format.
-- **build**: a commit of the type `build` adds changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
-- **chore**: a commit of the type `chore` adds changes that don't modify src or test files
-- **ci**: a commit of the type `ci` adds changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
-- **docs**: a commit of the type `docs` adds documentation only changes
-- **perf**: a commit of the type `perf` adds code change that improves performance
-- **refactor**: a commit of the type `refactor` adds code change that neither fixes a bug nor adds a feature
-- **revert**: a commit of the type `revert` reverts a previous commit
-- **style**: a commit of the type `style` adds code changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
-- **test**: a commit of the type `test` adds missing tests or correcting existing tests
+| Name | Version |
+|------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.34.0 |
 
-Base configuration used for this project is [commitlint-config-conventional (based on the Angular convention)](https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional#type-enum)
+## Modules
 
-If you are a developer using vscode, [this](https://marketplace.visualstudio.com/items?itemName=joshbolduc.commitlint) plugin may be helpful.
+No modules.
 
-`detect-secrets-hook` prevents new secrets from being introduced into the baseline. TODO: INSERT DOC LINK ABOUT HOOKS
+## Resources
 
-In order for `pre-commit` hooks to work properly
+| Name | Type |
+|------|------|
+| [aws_lb.application](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb) | resource |
+| [aws_lb_listener.application](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
+| [aws_lb_target_group.application](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group) | resource |
+| [aws_security_group.application](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
+| [aws_security_group.load_balancer](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
+| [aws_security_group.load_balancer_redirect](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
 
-- You need to have the pre-commit package manager installed. [Here](https://pre-commit.com/#install) are the installation instructions.
-- `pre-commit` would install all the hooks when commit message is added by default except for `commitlint` hook. `commitlint` hook would need to be installed manually using the command below
+## Inputs
 
-```
-pre-commit install --hook-type commit-msg
-```
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_name"></a> [name](#input\_name) | Name of the application. | `string` | n/a | yes |
+| <a name="input_naming_prefix"></a> [naming\_prefix](#input\_naming\_prefix) | Prefix to other resources. | `any` | n/a | yes |
+| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | Application Name running in ECS Task. | `string` | n/a | yes |
+| <a name="input_subnets"></a> [subnets](#input\_subnets) | Subnetnet ID's for the Load Balancer to use. | `list(string)` | n/a | yes |
+| <a name="input_health_check_path"></a> [health\_check\_path](#input\_health\_check\_path) | Path to check App Health (e.g.; /, /health) | `string` | `"/"` | no |
+| <a name="input_application_port"></a> [application\_port](#input\_application\_port) | Port of Application | `string` | `80` | no |
+| <a name="input_certificate_arn"></a> [certificate\_arn](#input\_certificate\_arn) | ARN of the ACM cert | `string` | `""` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | Tags to be applied to all resources created | `map(string)` | `{}` | no |
 
-## To test the resource group module locally
+## Outputs
 
-1. For development/enhancements to this module locally, you'll need to install all of its components. This is controlled by the `configure` target in the project's [`Makefile`](./Makefile). Before you can run `configure`, familiarize yourself with the variables in the `Makefile` and ensure they're pointing to the right places.
-
-```
-make configure
-```
-
-This adds in several files and directories that are ignored by `git`. They expose many new Make targets.
-
-2. The first target you care about is `env`. This is the common interface for setting up environment variables. The values of the environment variables will be used to authenticate with cloud provider from local development workstation.
-
-`make configure` command will bring down `azure_env.sh` file on local workstation. Devloper would need to modify this file, replace the environment variable values with relevant values.
-
-These environment variables are used by `terratest` integration suit.
-
-Service principle used for authentication(value of ARM_CLIENT_ID) should have below privileges on resource group within the subscription.
-
-```
-"Microsoft.Resources/subscriptions/resourceGroups/write"
-"Microsoft.Resources/subscriptions/resourceGroups/read"
-"Microsoft.Resources/subscriptions/resourceGroups/delete"
-```
-
-Then run this make target to set the environment variables on developer workstation.
-
-```
-make env
-```
-
-3. The first target you care about is `check`.
-
-**Pre-requisites**
-Before running this target it is important to ensure that, developer has created files mentioned below on local workstation under root directory of git repository that contains code for primitives/segments. Note that these files are `azure` specific. If primitive/segment under development uses any other cloud provider than azure, this section may not be relevant.
-
-- A file named `provider.tf` with contents below
-
-```
-provider "azurerm" {
-  features {}
-}
-```
-
-- A file named `terraform.tfvars` which contains key value pair of variables used.
-
-Note that since these files are added in `gitignore` they would not be checked in into primitive/segment's git repo.
-
-After creating these files, for running tests associated with the primitive/segment, run
-
-```
-make check
-```
-
-If `make check` target is successful, developer is good to commit the code to primitive/segment's git repo.
-
-`make check` target
-
-- runs `terraform commands` to `lint`,`validate` and `plan` terraform code.
-- runs `conftests`. `conftests` make sure `policy` checks are successful.
-- runs `terratest`. This is integration test suit.
-- runs `opa` tests
+| Name | Description |
+|------|-------------|
+| <a name="output_dns_name"></a> [dns\_name](#output\_dns\_name) | ALB DNS Name |
+| <a name="output_zone_id"></a> [zone\_id](#output\_zone\_id) | ALB Zone ID |
+| <a name="output_arn"></a> [arn](#output\_arn) | ALB ARN |
+| <a name="output_target_group_arn"></a> [target\_group\_arn](#output\_target\_group\_arn) | ALB Target Group ARN |
+| <a name="output_sg_id"></a> [sg\_id](#output\_sg\_id) | ALB Security Group, Allow 443 |
+| <a name="output_sg_redirect_id"></a> [sg\_redirect\_id](#output\_sg\_redirect\_id) | ALB Allow port 80 redirect to 443 |
+| <a name="output_application_sg_id"></a> [application\_sg\_id](#output\_application\_sg\_id) | Application Security Group |
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
