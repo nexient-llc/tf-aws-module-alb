@@ -124,9 +124,9 @@ resource "aws_lb_target_group" "application" {
     interval            = var.health_check_interval
     path                = var.health_check_path
     port                = var.application_port
-    healthy_threshold   = 3
-    unhealthy_threshold = 3
-    timeout             = 5
+    healthy_threshold   = var.healthy_threshold
+    unhealthy_threshold = var.unhealthy_threshold
+    timeout             = var.timeout
     protocol            = "HTTP"
     matcher             = "200-299"
   }

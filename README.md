@@ -51,6 +51,9 @@ No modules.
 | <a name="input_health_check_interval"></a> [health\_check\_interval](#input\_health\_check\_interval) | The approximate amount of time, in seconds, during which no response from a target means a failed health check. | `number` | `30` | no |
 | <a name="input_health_check_path"></a> [health\_check\_path](#input\_health\_check\_path) | Path to check App Health (e.g.; /, /health) | `string` | `"/"` | no |
 | <a name="input_application_port"></a> [application\_port](#input\_application\_port) | Port of Application | `string` | `80` | no |
+| <a name="input_healthy_threshold"></a> [healthy\_threshold](#input\_healthy\_threshold) | Consecutive health checks needed to declare healthy. | `number` | `3` | no |
+| <a name="input_unhealthy_threshold"></a> [unhealthy\_threshold](#input\_unhealthy\_threshold) | Consecutive failed health checks needed to declare unhealthy. | `number` | `3` | no |
+| <a name="input_timeout"></a> [timeout](#input\_timeout) | Wait time for response (seconds) | `number` | `5` | no |
 | <a name="input_certificate_arn"></a> [certificate\_arn](#input\_certificate\_arn) | ARN of the ACM cert | `string` | `""` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags to be applied to all resources created | `map(string)` | `{}` | no |
 

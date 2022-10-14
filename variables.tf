@@ -54,6 +54,24 @@ variable "application_port" {
   default     = 80
 }
 
+variable "healthy_threshold" {
+  description = "Consecutive health checks needed to declare healthy."
+  type        = number
+  default     = 3
+}
+
+variable "unhealthy_threshold" {
+  description = "Consecutive failed health checks needed to declare unhealthy."
+  type        = number
+  default     = 3
+}
+
+variable "timeout" {
+  description = "Wait time for response (seconds)"
+  type        = number
+  default     = 5
+}
+
 variable "certificate_arn" {
   description = "ARN of the ACM cert"
   type        = string
